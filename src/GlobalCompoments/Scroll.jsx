@@ -7,8 +7,6 @@ export default function Scroll() {
   const containerRef = useRef(null);
   const scrollRef = useRef(null);
 
-  console.log(crypto);
-
   useEffect(() => {
     const scrollContainer = containerRef.current;
     const scrollContent = scrollRef.current;
@@ -20,7 +18,7 @@ export default function Scroll() {
       if (scrollContainer.scrollLeft >= scrollContent.offsetWidth / 2) {
         scrollContainer.scrollLeft -= scrollContent.offsetWidth / 2;
       } else {
-        scrollContainer.scrollLeft += 1;
+        scrollContainer.scrollLeft += 1; // Adjust speed here
       }
 
       animationFrameId = requestAnimationFrame(scroll);
@@ -35,8 +33,12 @@ export default function Scroll() {
     <div className="overflow">
       <div
         ref={containerRef}
-        className="flex bg-[#06162b] bg-opacity-40 py-3 overflow-x-scroll custom-scroll overflow-hidden"
-        style={{ width: "100%" }}
+        className="flex bg-gradient-to-r from-[#06162b] via-[#1a3a5d] to-[#06162b] bg-opacity-70 py-3 overflow-x-scroll custom-scroll overflow-hidden"
+        style={{
+          width: "100%",
+          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
+          
+        }}
         role="region"
         aria-label="Crypto image scroll"
       >
@@ -49,17 +51,17 @@ export default function Scroll() {
             >
               <img
                 src={coin.image}
-                className="w-20 rounded-full"
+                className="w-20 rounded-full shadow-lg"
                 alt={coin.name}
               />
               <div className="flex flex-col">
-                <p className="text-white">
+                <p className="text-white text-lg font-semibold">
                   {coin.current_price && !isNaN(coin.current_price)
                     ? coin.current_price.toFixed(2)
                     : "N/A"}{" "}
                   USD
                 </p>
-                <p className="text-center">
+                <p className="text-center text-sm text-gray-300">
                   {coin.price_change_percentage_24h &&
                   !isNaN(coin.price_change_percentage_24h)
                     ? coin.price_change_percentage_24h.toFixed(2)
