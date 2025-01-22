@@ -1,12 +1,13 @@
 import { useContext, useRef, useEffect } from "react";
 import CryptoContext from "../Components/Crypto/Context/CryptoContext";
 import { RiTriangleFill } from "react-icons/ri";
+
 export default function Scroll() {
   const crypto = useContext(CryptoContext); // Get data from context
   const containerRef = useRef(null);
   const scrollRef = useRef(null);
 
-  console.log(crypto)
+  console.log(crypto);
 
   useEffect(() => {
     const scrollContainer = containerRef.current;
@@ -52,10 +53,20 @@ export default function Scroll() {
                 alt={coin.name}
               />
               <div className="flex flex-col">
-                <p className="text-white">{coin.current_price.toFixed(2)} USD</p>
-                <p className="text-center">{coin.price_change_percentage_24h.toFixed(2)}% </p>
+                <p className="text-white">
+                  {coin.current_price && !isNaN(coin.current_price)
+                    ? coin.current_price.toFixed(2)
+                    : "N/A"}{" "}
+                  USD
+                </p>
+                <p className="text-center">
+                  {coin.price_change_percentage_24h &&
+                  !isNaN(coin.price_change_percentage_24h)
+                    ? coin.price_change_percentage_24h.toFixed(2)
+                    : "N/A"}{" "}
+                  %
+                </p>
               </div>
-              
             </div>
           ))}
         </div>

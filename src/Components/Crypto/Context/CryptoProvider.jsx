@@ -27,7 +27,7 @@ export function CryptoProvider({ children }) {
   return(
   
   <CryptoContext.Provider value={crypto}>
-    {children}
+    {crypto.length > 0 ? children : null}
   </CryptoContext.Provider>);
 }
 

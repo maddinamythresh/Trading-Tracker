@@ -1,23 +1,37 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import CryptoContext from "../Crypto/Context/CryptoContext";
 import Scroll from "../../GlobalCompoments/Scroll";
 import SideBar from "../../GlobalCompoments/SideBar";
 import LinearGraph from "../../GlobalCompoments/LinearGraph";
 import Graph from "../../GlobalCompoments/Graph";
-export default function Display(){
 
-    const crypto = useContext(CryptoContext);
+const MemoizedScroll = React.memo(Scroll);
+const MemoizedSideBar = React.memo(SideBar);
+export default function Display() {
+  const crypto = useContext(CryptoContext);
+  const [coin, selectedCoin] = useState(null);
 
-    return(
-        <>
-                <Scroll/>
-                <div className="flex h-screen">
-        <SideBar />
+  const handleCoin = (coin) => {
+    selectedCoin(coin);
+  };
+
+  
+  return (
+    <>
+      <MemoizedScroll  />
+      <div className="flex h-screen">
+        
+        <MemoizedSideBar handleCoin={handleCoin} />
         <div className="w-2/3 flex flex-col">
-            <Graph/>
-          
+          {coin != null ? (
+            <Graph coin={coin.id} />
+          ) : (
+            <div className="flex flex-1 px-16 justify-center items-center bg-gray-800">
+              Click on the coin to see the graph
+            </div>
+          )}
         </div>
       </div>
-        </>
-    )
+    </>
+  );
 }
